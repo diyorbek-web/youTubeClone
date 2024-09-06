@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useState } from "react";
+import Header from "./components/Header";
+import Main from "./components/Main";
 function App() {
+  const [sideBar, setSideBar] = useState(false);
+  const [query, setQuery] = useState("react");
+  const handleSidebar = () => {
+    setSideBar((prevState) => !prevState);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header handleSidebar={handleSidebar} setQuery={setQuery} query={query} />
+      <Main sideBar={sideBar} query={query} />
     </div>
   );
 }
