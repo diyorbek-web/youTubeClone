@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const VideoPage = () => {
+const VideoPage = ({ sideBar }) => {
   const { id } = useParams(); // Video ID olish
   const [video, setVideo] = useState(null);
   const [error, setError] = useState(null);
@@ -22,7 +22,6 @@ const VideoPage = () => {
         }
 
         const data = await response.json();
-        console.log("Fetched Video:", data);
         setVideo(data.items[0]);
       } catch (error) {
         console.error("Error fetching video:", error);
@@ -39,21 +38,23 @@ const VideoPage = () => {
   const videoUrl = `https://www.youtube.com/embed/${video.id}`;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">{video.snippet.title}</h1>
-      <iframe
-        width="100%"
-        height="480"
-        src={videoUrl}
-        frameBorder="0"
-        allowFullScreen
-        title={video.snippet.title}
-      ></iframe>
-      <p className="mt-4">{video.snippet.description}</p>
-      <p className="text-gray-500 mt-2">
-        Qo‘yilgan sana:{" "}
-        {new Date(video.snippet.publishedAt).toLocaleDateString()}
-      </p>
+    <div className="border border-red-700 p-4 ml-4">
+      <div>
+        <h1 className="text-2xl font-bold mb-4">{video.snippet.title}</h1>
+        <iframe
+          width="100%"
+          height="480"
+          src={videoUrl}
+          frameBorder="0"
+          allowFullScreen
+          title={video.snippet.title}
+        ></iframe>
+        <p className="mt-4">{video.snippet.description}</p>
+        <p className="text-gray-500 mt-2">
+          Qo‘yilgan sana:{" "}
+          {new Date(video.snippet.publishedAt).toLocaleDateString()}
+        </p>
+      </div>
     </div>
   );
 };

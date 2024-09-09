@@ -4,9 +4,7 @@ import VideoList from "./VideoList";
 import Favorites from "./Favorites";
 import Subscription from "./Subscription";
 import CreateChannel from "./CreateChannel";
-const Main = ({ sideBar, query }) => {
-  const [choosePage, setChoosePage] = useState(1);
-
+const Main = ({ sideBar, query, choosePage }) => {
   const [videos, setVideos] = useState([]);
   const [error, setError] = useState(null);
 
@@ -26,7 +24,7 @@ const Main = ({ sideBar, query }) => {
         }
 
         const data = await response.json();
-        console.log("Fetched Videos:", data);
+
         setVideos(data.items);
       } catch (error) {
         console.error("Error fetching videos:", error);
@@ -39,13 +37,16 @@ const Main = ({ sideBar, query }) => {
 
   return (
     <div className="flex">
-      <Sidebar sideBar={sideBar} setChoosePage={setChoosePage} />
-      {choosePage === 1 && (
-        <VideoList videos={videos} sideBar={sideBar} query={query} />
-      )}
-      {choosePage === 2 && <Favorites sideBar={sideBar} />}
-      {choosePage === 3 && <Subscription sideBar={sideBar} />}
-      {choosePage === 4 && <CreateChannel sideBar={sideBar} />}
+      <div
+        className={`${sideBar ? "ml-[5%]" : "ml-[15%]"} ${
+          sideBar ? "w-[95%]" : "w-[85%]"
+        }`}
+      >
+        {choosePage === 1 && <VideoList videos={videos} query={query} />}
+        {choosePage === 2 && <Favorites sideBar={sideBar} />}
+        {choosePage === 3 && <Subscription sideBar={sideBar} />}
+        {choosePage === 4 && <CreateChannel sideBar={sideBar} />}
+      </div>
     </div>
   );
 };
